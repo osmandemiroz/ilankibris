@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "1045874524704",
+    "project_id": "ilan-kibris",
+    "storage_bucket": "ilan-kibris.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1045874524704:android:dda8cc6c47bf9cf3b8b245",
+        "android_client_info": {
+          "package_name": "com.bahasoftware.ilankibris"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1045874524704-acemvtvrhtkdpnegjbke5q9lashq2cul.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bahasoftware.ilankibris",
+            "certificate_hash": "12dfa4bb87094424ea9428619320f76a0c1eeb45"
+          }
+        },
+        {
+          "client_id": "1045874524704-n8oj6db3hmvr9s8o5ej9jo2i4l2n2dih.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.bahasoftware.ilankibris",
+            "certificate_hash": "cf6901f784113a00114a7d6129541376044c286b"
+          }
+        },
+        {
+          "client_id": "1045874524704-omcob82kkuubvgh2dapnu0447q57cb92.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJOUuERq7KAS8JrV9C4SX2rfo0FwJT7bM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1045874524704-omcob82kkuubvgh2dapnu0447q57cb92.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1045874524704-2a4dmsbuico3c44lms97jromhvd3nrr5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.eclassify.eclassify"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
