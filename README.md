@@ -1,4 +1,4 @@
-# eClassify
+# Ilan Kıbrıs
 
 //to run the application
 ```shell
@@ -50,4 +50,4 @@ flutter pub get
 pod install 
 pod update 
 ```
-# ilankibris.bahasoftware
+
