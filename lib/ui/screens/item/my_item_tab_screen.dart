@@ -4,6 +4,7 @@ import 'package:eClassify/ui/theme/theme.dart';
 import 'package:eClassify/utils/app_icon.dart';
 import 'package:eClassify/utils/constant.dart';
 import 'package:eClassify/utils/hive_utils.dart';
+import 'package:eClassify/utils/responsiveSize.dart';
 import 'package:eClassify/utils/ui_utils.dart';
 import 'package:eClassify/data/cubits/item/fetch_my_item_cubit.dart';
 import 'package:eClassify/data/model/item/item_model.dart';
@@ -379,7 +380,7 @@ class _MyItemTabState extends CloudState<MyItemTab> {
                                               ),
                                             ),
                                             SizedBox(
-                                              width: 20,
+                                              width: 10.rf(context),
                                             ),
                                             Flexible(
                                               flex: 1,

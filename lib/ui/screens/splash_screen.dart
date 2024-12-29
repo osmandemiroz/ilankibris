@@ -44,7 +44,7 @@ class SplashScreenState extends State<SplashScreen>
 
   bool isTimerCompleted = false;
   bool isSettingsLoaded = false; //TODO: temp
-  bool isLanguageLoaded = true;
+  bool isLanguageLoaded = false;
   late StreamSubscription<List<ConnectivityResult>> subscription;
   bool hasInternet = true;
 

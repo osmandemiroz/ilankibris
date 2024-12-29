@@ -235,6 +235,7 @@ class _AddItemDetailsState extends CloudState<AddItemDetails> {
                       "currency": currencyController.selectedCurrency.value,
                       "name": adTitleController.text,
                       "slug": adSlugController.text,
+                      "state": selectionController.selectedState.value,
                       "city": selectionController.selectedCity.value,
                       "description": adDescriptionController.text,
                       if (widget.isEdit != true)
@@ -255,6 +256,7 @@ class _AddItemDetailsState extends CloudState<AddItemDetails> {
                     if (context.read<FetchCustomFieldsCubit>().isEmpty()!) {
                       addCloudData("with_more_details", {
                         "country": "Cyprus",
+                        "state": selectionController.selectedState.value,
                         "city": selectionController.selectedCity.value,
                         "address":
                             "${selectionController.selectedState.value.toString()}, ${selectionController.selectedCity.value.toString()}",
