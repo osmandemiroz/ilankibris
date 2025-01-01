@@ -14,6 +14,21 @@ pod install
 cd ..
 ```
 
+//To make release build for iOS
+```shell
+flutter build ios --release
+```
+
+//To make release build for Android
+```shell
+flutter build apk --release
+```
+
+//To run the release build for iOS
+```shell
+open build/ios/Runner.xcworkspace
+```
+
 //To clean the pub cache
 ```shell
 flutter clean
