@@ -265,148 +265,153 @@ class LoginScreenState extends State<LoginScreen> {
         context: context,
         statusBarColor: context.color.backgroundColor,
       ),
-      child: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: PopScope(
-            canPop: isBack,
-            onPopInvoked: (didPop) {
-              if (widget.isDeleteAccount ?? false) {
-                Navigator.pop(context);
-              } else {
-                if (isOtpSent) {
-                  setState(() {
-                    isOtpSent = false;
-                    isMobileNumberField = true;
-                  });
-                } else if (sendMailClicked) {
-                  setState(() {
-                    sendMailClicked = false;
-                  });
+      child: Scaffold(
+        body: SafeArea(
+          child: GestureDetector(
+            onTap: () => FocusScope.of(context).unfocus(),
+            child: PopScope(
+              canPop: isBack,
+              onPopInvoked: (didPop) {
+                if (widget.isDeleteAccount ?? false) {
+                  Navigator.pop(context);
                 } else {
-                  setState(() {
-                    isBack = true;
-                  });
-                  return;
+                  if (isOtpSent) {
+                    setState(() {
+                      isOtpSent = false;
+                      isMobileNumberField = true;
+                    });
+                  } else if (sendMailClicked) {
+                    setState(() {
+                      sendMailClicked = false;
+                    });
+                  } else {
+                    setState(() {
+                      isBack = true;
+                    });
+                    return;
+                  }
                 }
-              }
-              setState(() {
-                isBack = false;
-              });
-              return;
-            },
-            child: AnnotatedRegion(
-              value: SystemUiOverlayStyle(
-                statusBarColor: context.color.backgroundColor,
-              ),
-              child: Scaffold(
-                backgroundColor: context.color.backgroundColor,
-                bottomNavigationBar: !isOtpSent && !sendMailClicked
-                    ? termAndPolicyTxt()
-                    : SizedBox.shrink(),
-                body: BlocListener<LoginCubit, LoginState>(
-                  listener: (context, state) {
-                    if (state is LoginSuccess) {
-                      HiveUtils.setUserIsAuthenticated(true);
-                      //GuestChecker.set(isGuest: false);
-                      //context.read<AuthCubit>().updateFCM(context);
-
-                      context
-                          .read<UserDetailsCubit>()
-                          .fill(HiveUtils.getUserDetails());
-                      if (state.isProfileCompleted) {
-                        if (HiveUtils.getCityName() != null &&
-                            HiveUtils.getCityName() != "") {
-                          HelperUtils.killPreviousPages(
-                              context, Routes.main, {"from": "login"});
-                        } else {
-                          Navigator.of(context).pushNamedAndRemoveUntil(
-                              Routes.locationPermissionScreen,
-                              (route) => false);
-                        }
-                      } else {
-                        Navigator.pushReplacementNamed(
-                          context,
-                          Routes.completeProfile,
-                          arguments: {
-                            "from": "login",
-                            "popToCurrent": false,
-                            "type": isMobileNumberField
-                                ? AuthenticationType.phone
-                                : AuthenticationType.email,
-                            "extraData": {
-                              "email": state.credential.user?.email ??
-                                  state.apiResponse['email'],
-                              "username": state.apiResponse['name'],
-                              "mobile": state.apiResponse['mobile'],
-                              "countryCode": countryCode
-                            }
-                          },
-                        );
-                      }
-                    }
-
-                    if (state is LoginFailure) {
-                      HelperUtils.showSnackBarMessage(
-                          context, state.errorMessage.toString());
-                    }
-                  },
-                  child: BlocConsumer<AuthenticationCubit, AuthenticationState>(
+                setState(() {
+                  isBack = false;
+                });
+                return;
+              },
+              child: AnnotatedRegion(
+                value: SystemUiOverlayStyle(
+                  statusBarColor: context.color.backgroundColor,
+                ),
+                child: Scaffold(
+                  backgroundColor: context.color.backgroundColor,
+                  bottomNavigationBar: !isOtpSent && !sendMailClicked
+                      ? termAndPolicyTxt()
+                      : SizedBox.shrink(),
+                  body: BlocListener<LoginCubit, LoginState>(
                     listener: (context, state) {
-                      if (state is AuthenticationSuccess) {
-                        Widgets.hideLoder(context);
+                      if (state is LoginSuccess) {
+                        HiveUtils.setUserIsAuthenticated(true);
+                        //GuestChecker.set(isGuest: false);
+                        //context.read<AuthCubit>().updateFCM(context);
 
-                        if (state.type == AuthenticationType.email) {
-                          //FirebaseAuth.instance.currentUser?.sendEmailVerification();
-                          if (state.credential.user!.emailVerified) {
+                        context
+                            .read<UserDetailsCubit>()
+                            .fill(HiveUtils.getUserDetails());
+                        if (state.isProfileCompleted) {
+                          if (HiveUtils.getCityName() != null &&
+                              HiveUtils.getCityName() != "") {
+                            HelperUtils.killPreviousPages(
+                                context, Routes.main, {"from": "login"});
+                          } else {
+                            Navigator.of(context).pushNamedAndRemoveUntil(
+                                Routes.locationPermissionScreen,
+                                (route) => false);
+                          }
+                        } else {
+                          Navigator.pushReplacementNamed(
+                            context,
+                            Routes.completeProfile,
+                            arguments: {
+                              "from": "login",
+                              "popToCurrent": false,
+                              "type": isMobileNumberField
+                                  ? AuthenticationType.phone
+                                  : AuthenticationType.email,
+                              "extraData": {
+                                "email": state.credential.user?.email ??
+                                    state.apiResponse['email'],
+                                "username": state.apiResponse['name'],
+                                "mobile": state.apiResponse['mobile'],
+                                "countryCode": countryCode
+                              }
+                            },
+                          );
+                        }
+                      }
+
+                      if (state is LoginFailure) {
+                        HelperUtils.showSnackBarMessage(
+                            context, state.errorMessage.toString());
+                      }
+                    },
+                    child:
+                        BlocConsumer<AuthenticationCubit, AuthenticationState>(
+                      listener: (context, state) {
+                        if (state is AuthenticationSuccess) {
+                          Widgets.hideLoder(context);
+
+                          if (state.type == AuthenticationType.email) {
+                            //FirebaseAuth.instance.currentUser?.sendEmailVerification();
+                            if (state.credential.user!.emailVerified) {
+                              context.read<LoginCubit>().login(
+                                  phoneNumber:
+                                      state.credential.user!.phoneNumber,
+                                  firebaseUserId: state.credential.user!.uid,
+                                  type: state.type.name,
+                                  credential: state.credential,
+                                  countryCode: null);
+                            } else {
+                              // HelperUtils.showSnackBarMessage(context,"Please Verify Your email first" );
+                            }
+                          } else if (state.type == AuthenticationType.phone) {
+                            context.read<LoginCubit>().login(
+                                phoneNumber:
+                                    (state.payload as PhoneLoginPayload)
+                                        .phoneNumber,
+                                firebaseUserId: state.credential.user!.uid,
+                                type: state.type.name,
+                                credential: state.credential,
+                                countryCode:
+                                    "+${(state.payload as PhoneLoginPayload).countryCode}");
+                          } else {
                             context.read<LoginCubit>().login(
                                 phoneNumber: state.credential.user!.phoneNumber,
                                 firebaseUserId: state.credential.user!.uid,
                                 type: state.type.name,
                                 credential: state.credential,
                                 countryCode: null);
-                          } else {
-                            // HelperUtils.showSnackBarMessage(context,"Please Verify Your email first" );
                           }
-                        } else if (state.type == AuthenticationType.phone) {
-                          context.read<LoginCubit>().login(
-                              phoneNumber: (state.payload as PhoneLoginPayload)
-                                  .phoneNumber,
-                              firebaseUserId: state.credential.user!.uid,
-                              type: state.type.name,
-                              credential: state.credential,
-                              countryCode:
-                                  "+${(state.payload as PhoneLoginPayload).countryCode}");
-                        } else {
-                          context.read<LoginCubit>().login(
-                              phoneNumber: state.credential.user!.phoneNumber,
-                              firebaseUserId: state.credential.user!.uid,
-                              type: state.type.name,
-                              credential: state.credential,
-                              countryCode: null);
                         }
-                      }
 
-                      if (state is AuthenticationFail) {
-                        Widgets.hideLoder(context);
-                      }
+                        if (state is AuthenticationFail) {
+                          Widgets.hideLoder(context);
+                        }
 
-                      if (state is AuthenticationInProcess) {
-                        Widgets.showLoader(context);
-                      }
-                    },
-                    builder: (context, state) {
-                      return Builder(builder: (context) {
-                        return Form(
-                          key: _formKey,
-                          child: isOtpSent
-                              ? verifyOTPWidget()
-                              : sendMailClicked
-                                  ? enterPasswordWidget()
-                                  : buildLoginWidget(),
-                        );
-                      });
-                    },
+                        if (state is AuthenticationInProcess) {
+                          Widgets.showLoader(context);
+                        }
+                      },
+                      builder: (context, state) {
+                        return Builder(builder: (context) {
+                          return Form(
+                            key: _formKey,
+                            child: isOtpSent
+                                ? verifyOTPWidget()
+                                : sendMailClicked
+                                    ? enterPasswordWidget()
+                                    : buildLoginWidget(),
+                          );
+                        });
+                      },
+                    ),
                   ),
                 ),
               ),

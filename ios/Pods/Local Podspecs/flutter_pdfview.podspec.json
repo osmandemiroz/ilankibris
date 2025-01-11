@@ -15,15 +15,15 @@
     "http": "https://github.com/endigo/flutter_pdfview"
   },
   "documentation_url": "https://pub.dev/packages/flutter_pdfview",
-  "source_files": "Classes/**/*",
-  "public_header_files": "Classes/**/*.h",
+  "source_files": "flutter_pdfview/Sources/flutter_pdfview/**/*.{h,m}",
+  "public_header_files": "flutter_pdfview/Sources/flutter_pdfview/include/**/*.h",
   "dependencies": {
     "Flutter": [
 
     ]
   },
   "platforms": {
-    "ios": "9.0"
+    "ios": "11.0"
   },
   "pod_target_xcconfig": {
     "DEFINES_MODULE": "YES",
